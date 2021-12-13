@@ -32,11 +32,19 @@ public class MainActivity extends AppCompatActivity {
     private NfcAdapter nfcAdapter;
     private NdefMessage mNdefPushMessage;
     private Tag tag;
+    private NfcManager nfcManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        nfcManager = new NfcManager(this);
+
+        onNewIntent(getIntent());
+
         resolveIntent(getIntent());
+
+
         nfcAdapter = M1CardUtil.isNfcAble(this);
         M1CardUtil.setPendingIntent(PendingIntent.getActivity(this, 0,
                 new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0));
@@ -104,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onNewIntent(Intent intent) {
+
         super.onNewIntent(intent);
         setIntent(intent);
         resolveIntent(intent);
