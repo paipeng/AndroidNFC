@@ -12,6 +12,7 @@ import android.widget.Toast;
 import java.io.IOException;
 
 public class M1CardUtil {
+    private static final String TAG = M1CardUtil.class.getSimpleName();
     private static PendingIntent pendingIntent;
 
     public static PendingIntent getPendingIntent() {
@@ -47,7 +48,7 @@ public class M1CardUtil {
      * @return
      */
     public static boolean hasCardType(Tag tag, Activity activity, String cardType) {
-
+        Log.d(TAG, "hasCardType: " + tag.toString());
         if (tag == null) {
             Toast.makeText(activity, "请贴卡", Toast.LENGTH_LONG).show();
             return false;
@@ -79,6 +80,7 @@ public class M1CardUtil {
      * @throws IOException
      */
     public static String readIsoCard(Tag tag) throws IOException {
+        Log.d(TAG, "readIsoCard");
         IsoDep isoDep = IsoDep.get(tag);
         if (!isoDep.isConnected()) {
             isoDep.connect();

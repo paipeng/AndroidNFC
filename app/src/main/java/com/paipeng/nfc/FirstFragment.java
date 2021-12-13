@@ -11,6 +11,8 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.paipeng.nfc.databinding.FragmentFirstBinding;
 
+import java.io.IOException;
+
 public class FirstFragment extends Fragment {
 
     private FragmentFirstBinding binding;
@@ -32,8 +34,16 @@ public class FirstFragment extends Fragment {
         binding.buttonFirst.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavHostFragment.findNavController(FirstFragment.this)
-                        .navigate(R.id.action_FirstFragment_to_SecondFragment);
+                //NavHostFragment.findNavController(FirstFragment.this)
+                //        .navigate(R.id.action_FirstFragment_to_SecondFragment);
+
+                try {
+                    String data = ((MainActivity)getActivity()).readCPUCardData();
+                    binding.textviewFirst.setText(data);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
     }
