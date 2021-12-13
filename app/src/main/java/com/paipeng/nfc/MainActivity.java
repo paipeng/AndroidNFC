@@ -1,31 +1,40 @@
 package com.paipeng.nfc;
 
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.nfc.NfcAdapter;
+import android.nfc.Tag;
 import android.os.Bundle;
-
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.paipeng.nfc.databinding.ActivityMainBinding;
-
-import android.view.Menu;
-import android.view.MenuItem;
+import com.paipeng.nfc.utils.M1CardUtil;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
+    private NfcAdapter nfcAdapter;
+    private Tag tag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        nfcAdapter = M1CardUtil.isNfcAble(this);
+        M1CardUtil.setPendingIntent(PendingIntent.getActivity(this, 0, new Intent(this, getClass()), 0));
+
+        tag = getIntent().getParcelableExtra(NfcAdapter.EXTRA_TAG);
+
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
